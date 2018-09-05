@@ -33,29 +33,7 @@ class LinkedList {
     return element
   }
 
-  //o functie ce adauga iteme la finalul unei liste
-  addLast(element) {
-    let node = new Node(element) //vom crea nodul
-
-    let current //loc in care sa stockezi nodul curent
-
-    // cat timp lista este goala seteaza nodul
-    //sa fie inceputul listei
-    if (this.head === null) {
-      this.head = node
-    } else {
-      current = this.head //setam nodul curent ca a fi capatul si
-      while (current.next) {
-        //iteream pana la finalul listei
-        current = current.next
-      }
-      //adauga nodul
-      current.next = node
-    }
-    this.length += 1
-    console.log('Current length is: ', this.length)
-  }
-
+  
   //sterge un element din pozitia specificata
   deleteAt(index) {
     if (index > 0 && index > this.length) {
@@ -79,6 +57,30 @@ class LinkedList {
       this.length--
       console.log('Deleted item is: ' + current.element)
     }
+  }
+  
+  //o functie ce adauga iteme la finalul unei liste
+  addLast(element) {
+    let node = new Node(element) //vom crea nodul
+
+    let current //loc in care sa stockezi nodul curent
+
+    // cat timp lista este goala seteaza nodul
+    //sa fie inceputul listei
+    if (this.head === null) {
+      this.head = node
+    } else {
+      current = this.head //setam nodul curent ca a fi capatul si
+      while (current.next) { //iteream pana la finalul listei
+        current = current.next
+      }
+      //adauga nodul
+      current.next = node
+    }
+    this.length++
+
+
+    console.log('Current length is: ', this.length)
   }
 
   //sterge un element din lista. Returneaza elementul
