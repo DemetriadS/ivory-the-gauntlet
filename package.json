@@ -1,0 +1,24 @@
+{
+  "name": "demetriad",
+  "version": "1.0.0",
+  "description": "",
+  "main": "LinkedList.js",
+  "scripts": {
+    "start": "node LinkedList.js",
+    "test": "mocha LinkedListTest.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/DemetriadS/ivory-the-gauntlet.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/DemetriadS/ivory-the-gauntlet/issues"
+  },
+  "homepage": "https://github.com/DemetriadS/ivory-the-gauntlet#readme",
+  "dependencies": {
+    "chai": "^4.1.2",
+    "mocha": "^5.2.0"
+  }
+}

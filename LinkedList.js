@@ -13,20 +13,31 @@ class LinkedList {
     this.head = null
   }
 
-  //adaugaitem la inceputul listei
+  //adauga item la inceputul listei
   addToHead(element) {
-    var node = new Node(element)
-    node.next = this.head
-    this.head = node
-    this.length++
+    let node = new Node(element) // declari nodul
+    node.next = this.head  // urmatorul nod o sa fie capatul
+    this.head = node //nodul curent este nodul
+    this.length++ 
     return this
+  }
+
+  deletefromHead() {
+    if ( this.length === 0){ //daca lungimea este = 0
+      return undefined
+    }
+    const element = this.head.element //
+    this.head = this.head.next
+    this.length--
+    
+    return element
   }
 
   //o functie ce adauga iteme la finalul unei liste
   addLast(element) {
-    var node = new Node(element) //vom crea nodul
+    let node = new Node(element) //vom crea nodul
 
-    var current //loc in care sa stockezi nodul curent
+    let current //loc in care sa stockezi nodul curent
 
     // cat timp lista este goala seteaza nodul
     //sa fie inceputul listei
@@ -46,12 +57,12 @@ class LinkedList {
   }
 
   //sterge un element din pozitia specificata
-  deleteFrom(index) {
+  deleteAt(index) {
     if (index > 0 && index > this.length) {
       return -1
     } else {
-      var current, previous
-      var iteration = 0
+      let current, previous
+      let iteration = 0
       current = this.head
       previous = current
       if (index === 0) {
@@ -73,38 +84,35 @@ class LinkedList {
   //sterge un element din lista. Returneaza elementul
   //sters, daca nu,returneaza false
   delete(element) {
-    var current = this.head
-    var previous = null
+    let current = this.head
+    let previous = this.head
 
     //itereaza peste lista
-    while (current != null) {
+    while (current !== null) {
       //compara elementul cu cel curent, daca-l gaseste
       //il sterge si returneaza true
       if (current.element === element) {
-        if (previous == null) {
-          this.head = current.next
-        } else {
-          previous.head = current.next
-        }
-        this.length--
-        return current.element
+        previous.next = current.next
+        return current
       }
-      previous = current
-      current = current.next
+      else {
+        previous = current
+        current = current.next
+      }
     }
     return false
   }
 
   //localizarea unui item
   find(element) {
-    var current = this.head
-    while (current) {
+    let current = this.head
+    while (current !== null) {
       if (current.element === element) {
-        return this.current
+        return true
       }
       current = current.next
     }
-    return current
+    return false
   }
 
   //adauga un element la positia indicata intr-un index
@@ -113,9 +121,9 @@ class LinkedList {
       return false
     } else {
       //cream un nou nod
-      var node = new Node(element)
-      var current, previous
-      var iteration = 0
+      let node = new Node(element)
+      let current, previous
+      let iteration = 0
 
       current = this.head
 
@@ -140,40 +148,70 @@ class LinkedList {
       this.length++
     }
   }
+
+  sort(){
+    let array = []
+    let current = this.head
+    while(current !== null){
+      array.push(current.element)
+      current = current.next
+    }
+
+    let arrayLength = array.length
+
+    for( let i = arrayLength - 1; i >= 0; i-- ){
+      for( let index = 1; index <= i; index++ ) {
+        if( array[index - 1] > array[index] ) {
+          let temp = array[index - 1]
+          array[index - 1] = array[index]
+          array[index] = temp
+        }
+      }
+    }
+    return array.join(' ')
+  }
+
   // verifica daca lista este goala
   isEmpty() {
     return this.length == 0
   }
   //afiseaza lungimea listei
   size_of_list() {
-    console.log('Size of list is: ' + this.length)
+    return this.length
   }
 
   //printeaza continutul unei liste
   printList() {
-    var current = this.head
-    var string = ''
+    let current = this.head
+    let string = ''
     while (current) {
       string += current.element + ' '
       current = current.next
     }
-    console.log('Current list is: ' + string)
+    return string
   }
 }
-var SinglyLinkedList = new LinkedList()
+
+module.exports = LinkedList
+
+let SinglyLinkedList = new LinkedList()
 console.log('Is the list empty? ' + SinglyLinkedList.isEmpty())
+SinglyLinkedList.deletefromHead()
 SinglyLinkedList.addLast(3)
 SinglyLinkedList.addLast(4)
 SinglyLinkedList.addToHead(1)
-SinglyLinkedList.printList()
+console.log('Current list is: ' + SinglyLinkedList.printList())
 SinglyLinkedList.insertAt(5, 2)
-'Current list is: ' + SinglyLinkedList.printList()
+console.log('Current list is: ' + SinglyLinkedList.printList())
+SinglyLinkedList.deletefromHead()
+console.log('Current list is: ' + SinglyLinkedList.printList())
 SinglyLinkedList.addLast(6)
 SinglyLinkedList.addLast(7)
-'Current list is: ' + SinglyLinkedList.printList()
-SinglyLinkedList.size_of_list()
-SinglyLinkedList.deleteFrom(3)
-console.log('Is element removed? ' + SinglyLinkedList.delete(3))
+console.log('Current list is: ' + SinglyLinkedList.printList())
+console.log('Size of list is: ' + SinglyLinkedList.size_of_list())
+SinglyLinkedList.deleteAt(3)
+console.log('Is element removed? ', SinglyLinkedList.delete(3))
 SinglyLinkedList.printList()
-console.log('Is element removed? ' + SinglyLinkedList.delete(10))
-console.log('Found this element! ' + SinglyLinkedList.find(3))
+console.log('Is element removed? ', SinglyLinkedList.delete(10))
+console.log('Current list is: ' + SinglyLinkedList.printList())
+console.log('Found this element! ', SinglyLinkedList.find(6))
