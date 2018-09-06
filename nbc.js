@@ -49,10 +49,10 @@ function getNumberOfSongs(){
 };
 
 function setLabelProbabilities(){
-  Object.keys(labelCounts).forEach(function(label){
-    let numberOfSongs = getNumberOfSongs();
-    labelProbabilities[label] = labelCounts[label] / numberOfSongs;
-  });
+  for( label in labelCounts){
+    labelProbabilities[label] = labelCounts[label] / songs.length
+  };
+  return labelProbabilities
 };
 
 function setChordCountsInLabels(){
@@ -60,12 +60,11 @@ function setChordCountsInLabels(){
     if(chordCountsInLabels[song.label] === undefined){
       chordCountsInLabels[song.label] = {};
     }
-    song.chords.forEach(function(chords){
-      if(chordCountsInLabels[song.label][chords] > 0){
-        chordCountsInLabels[song.label][chords] =
-chordCountsInLabels[song.label][chords] + 1;
+    song.chords.forEach(function(chord){
+      if(chordCountsInLabels[song.label][chord] !== undefined){
+        chordCountsInLabels[song.label][chord]++
       } else {
-        chordCountsInLabels[song.label][chords] = 1;
+        chordCountsInLabels[song.label][chord] = 1;
       }
     });
   });
@@ -96,7 +95,8 @@ train(paperBag, difficulties.hard);
 train(toxic, difficulties.hard);
 train(bulletproof, difficulties.hard);
 
-setLabelProbabilities();
+console.log('Number of songs:', getNumberOfSongs())
+console.log('label probabilities set: '+'\n', setLabelProbabilities())
 setChordCountsInLabels();
 setProbabilityOfChordsInLabels();
 

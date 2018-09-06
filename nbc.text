@@ -10,3 +10,7 @@
     pushed json instead of array, to be clearer and make usage simpler
 -** to be more obvious I substitutted every i and j in the code with
     chords and labels
+-** declaration of numberOfSongs should be in loops
+-** unnecesary declaration of numberOfSongs in setLabelProbabilities function,
+    we can just divide to the length of the list of songs
+-** 
