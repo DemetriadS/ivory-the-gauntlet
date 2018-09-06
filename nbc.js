@@ -27,7 +27,6 @@ let chordCountsInLabels = {};
 let probabilityOfChordsInLabels = {};
 
 function train(chords, label){
-  songs.push([label, chords]);
   for (let i = 0; i < chords.length; i++){
     if(!allChords.includes(chords[i])){
       allChords.push(chords[i]);
@@ -38,6 +37,7 @@ function train(chords, label){
   } else {
     labelCounts[label] = 1;
   }
+  songs.push([label, chords]);
 };
 
 function getNumberOfSongs(){
@@ -77,15 +77,21 @@ probabilityOfChordsInLabels[i][j] * 1.0 / songs.length;
   });
 }
 
-train(imagine, 'easy');
-train(somewhere_over_the_rainbow, 'easy');
-train(tooManyCooks, 'easy');
-train(iWillFollowYouIntoTheDark, 'medium');
-train(babyOneMoreTime, 'medium');
-train(creep, 'medium');
-train(paperBag, 'hard');
-train(toxic, 'hard');
-train(bulletproof, 'hard');
+const difficulties = {
+  easy: 'easy',
+  medium: 'medium',
+  hard: 'hard'
+}
+
+train(imagine, difficulties.easy);
+train(somewhere_over_the_rainbow, difficulties.easy);
+train(tooManyCooks, difficulties.easy);
+train(iWillFollowYouIntoTheDark, difficulties.medium);
+train(babyOneMoreTime, difficulties.medium);
+train(creep, difficulties.medium);
+train(paperBag, difficulties.hard);
+train(toxic, difficulties.hard);
+train(bulletproof, difficulties.hard);
 
 setLabelProbabilities();
 setChordCountsInLabels();
