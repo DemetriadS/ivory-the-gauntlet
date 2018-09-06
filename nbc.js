@@ -82,7 +82,6 @@ function setChordCountsInLabels() {
 }
 
 function setProbabilityOfChordsInLabels() {
-
   for (label in chordCountsInLabels) {
     for (chord in chordCountsInLabels[label]) {
       chordCountsInLabels[label][chord] /= songs.length
@@ -109,7 +108,7 @@ train(bulletproof, difficulties.hard)
 console.log('Number of songs:', getNumberOfSongs())
 console.log('label probabilities set: ' + '\n', setLabelProbabilities())
 console.log('Chrod counts in labels is: ' + '\n',setChordCountsInLabels())
-setProbabilityOfChordsInLabels()
+console.log('Probability of chords in labels is: ' + '\n',setProbabilityOfChordsInLabels())
 
 function classify(chords) {
   let ttal = labelProbabilities
