@@ -6,31 +6,31 @@
 
 
 // songs
-imagine = ['c', 'cmaj7', 'f', 'am', 'dm', 'g', 'e7'];
-somewhere_over_the_rainbow = ['c', 'em', 'f', 'g', 'am'];
-tooManyCooks = ['c', 'g', 'f'];
-iWillFollowYouIntoTheDark = ['f', 'dm', 'bb', 'c', 'a', 'bbm'];
-babyOneMoreTime = ['cm', 'g', 'bb', 'eb', 'fm', 'ab'];
-creep = ['g', 'gsus4', 'b', 'bsus4', 'c', 'cmsus4', 'cm6'];
-army = ['ab', 'ebm7', 'dbadd9', 'fm7', 'bbm', 'abmaj7', 'ebm'];
-paperBag = ['bm7', 'e', 'c', 'g', 'b7', 'f', 'em', 'a', 'cmaj7',
+const imagine = ['c', 'cmaj7', 'f', 'am', 'dm', 'g', 'e7'];
+const somewhere_over_the_rainbow = ['c', 'em', 'f', 'g', 'am'];
+const tooManyCooks = ['c', 'g', 'f'];
+const iWillFollowYouIntoTheDark = ['f', 'dm', 'bb', 'c', 'a', 'bbm'];
+const babyOneMoreTime = ['cm', 'g', 'bb', 'eb', 'fm', 'ab'];
+const creep = ['g', 'gsus4', 'b', 'bsus4', 'c', 'cmsus4', 'cm6'];
+const army = ['ab', 'ebm7', 'dbadd9', 'fm7', 'bbm', 'abmaj7', 'ebm'];
+const paperBag = ['bm7', 'e', 'c', 'g', 'b7', 'f', 'em', 'a', 'cmaj7',
             'em7', 'a7', 'f7', 'b'];
-toxic = ['cm', 'eb', 'g', 'cdim', 'eb7', 'd7', 'db7', 'ab', 'gmaj7',
+const toxic = ['cm', 'eb', 'g', 'cdim', 'eb7', 'd7', 'db7', 'ab', 'gmaj7',
          'g7'];
-bulletproof = ['d#m', 'g#', 'b', 'f#', 'g#m', 'c#'];
+const bulletproof = ['d#m', 'g#', 'b', 'f#', 'g#m', 'c#'];
 
-var songs = [];
-var labels = [];
-var allChords = [];
-var labelCounts = [];
-var labelProbabilities = [];
-var chordCountsInLabels = {};
-var probabilityOfChordsInLabels = {};
+let songs = [];
+let labels = [];
+let allChords = [];
+let labelCounts = [];
+let labelProbabilities = [];
+let chordCountsInLabels = {};
+let probabilityOfChordsInLabels = {};
 
 function train(chords, label){
   songs.push([label, chords]);
   labels.push(label);
-  for (var i = 0; i < chords.length; i++){
+  for (let i = 0; i < chords.length; i++){
     if(!allChords.includes(chords[i])){
       allChords.push(chords[i]);
     }
@@ -48,7 +48,7 @@ function getNumberOfSongs(){
 
 function setLabelProbabilities(){
   Object.keys(labelCounts).forEach(function(label){
-    var numberOfSongs = getNumberOfSongs();
+    let numberOfSongs = getNumberOfSongs();
     labelProbabilities[label] = labelCounts[label] / numberOfSongs;
   });
 };
@@ -94,13 +94,13 @@ setChordCountsInLabels();
 setProbabilityOfChordsInLabels();
 
 function classify(chords){
-  var ttal = labelProbabilities;
+  let ttal = labelProbabilities;
   console.log(ttal);
-  var classified = {};
+  let classified = {};
   Object.keys(ttal).forEach(function(obj){
-    var first = labelProbabilities[obj] + 1.01;
+    let first = labelProbabilities[obj] + 1.01;
     chords.forEach(function(chord){
-      var probabilityOfChordInLabel =
+      let probabilityOfChordInLabel =
 probabilityOfChordsInLabels[obj][chord];
       if(probabilityOfChordInLabel === undefined){
         first + 1.01;

@@ -1,1 +1,2 @@
 -** deleted fs and song_11, unused in code
+-** changed from var to let, to evade the scope monster that var creates!?!
