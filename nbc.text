@@ -1,3 +1,12 @@
 -** deleted fs and song_11, unused in code
 -** used const for songs that i presume i dont want to change or later in the code
+-** deleted labels from code, redundat to the code
 -** changed from var to let, to evade the scope monster that var creates!?!
+-** created a new json (dificulties) to evade missed written problems in the future to train
+-** refactored 'for loop' from train funtion into a forEach for better 
+    understanding and for fluency in code, snce we use forEach loops through the code
+-** double negation is = to true, redundant, also, code, evercomplicated
+-** refactored iterration in the train function,
+    pushed json instead of array, to be clearer and make usage simpler
+-** to be more obvious I substitutted every i and j in the code with
+    chords and labels

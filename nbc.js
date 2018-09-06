@@ -21,23 +21,27 @@ const bulletproof = ['d#m', 'g#', 'b', 'f#', 'g#m', 'c#'];
 
 let songs = [];
 let allChords = [];
-let labelCounts = [];
-let labelProbabilities = [];
+let labelCounts = {};
+let labelProbabilities = {};
 let chordCountsInLabels = {};
 let probabilityOfChordsInLabels = {};
 
 function train(chords, label){
-  for (let i = 0; i < chords.length; i++){
-    if(!allChords.includes(chords[i])){
-      allChords.push(chords[i]);
+
+  chords.forEach(function(chord) {
+    if (allChords[chord] === undefined) {
+      allChords.push(chord)
     }
-  }
-  if(!!(Object.keys(labelCounts).includes(label))){
-    labelCounts[label] = labelCounts[label] + 1;
+  })
+  if (labelCounts[label] !== undefined) {
+    labelCounts[label]++
   } else {
     labelCounts[label] = 1;
   }
-  songs.push([label, chords]);
+  songs.push({
+    label: label,
+    chords: chords
+  })
 };
 
 function getNumberOfSongs(){
@@ -52,16 +56,16 @@ function setLabelProbabilities(){
 };
 
 function setChordCountsInLabels(){
-  songs.forEach(function(i){
-    if(chordCountsInLabels[i[0]] === undefined){
-      chordCountsInLabels[i[0]] = {};
+  songs.forEach(function(song){
+    if(chordCountsInLabels[song.label] === undefined){
+      chordCountsInLabels[song.label] = {};
     }
-    i[1].forEach(function(j){
-      if(chordCountsInLabels[i[0]][j] > 0){
-        chordCountsInLabels[i[0]][j] =
-chordCountsInLabels[i[0]][j] + 1;
+    song.chords.forEach(function(chords){
+      if(chordCountsInLabels[song.label][chords] > 0){
+        chordCountsInLabels[song.label][chords] =
+chordCountsInLabels[song.label][chords] + 1;
       } else {
-        chordCountsInLabels[i[0]][j] = 1;
+        chordCountsInLabels[song.label][chords] = 1;
       }
     });
   });
@@ -69,12 +73,11 @@ chordCountsInLabels[i[0]][j] + 1;
 
 function setProbabilityOfChordsInLabels(){
   probabilityOfChordsInLabels = chordCountsInLabels;
-  Object.keys(probabilityOfChordsInLabels).forEach(function(i){
-    Object.keys(probabilityOfChordsInLabels[i]).forEach(function(j){
-      probabilityOfChordsInLabels[i][j] =
-probabilityOfChordsInLabels[i][j] * 1.0 / songs.length;
-    });
-  });
+  Object.keys(chordCountsInLabels).forEach(function(label) {
+    Object.keys(chordCountsInLabels[label]).forEach(function(chord) {
+      chordCountsInLabels[label][chord] = (chordCountsInLabels[label][chord]) / songs.length //we dont need multiplication by 1.0
+    })
+  })
 }
 
 const difficulties = {
