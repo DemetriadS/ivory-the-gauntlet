@@ -1,2 +1,3 @@
 -** deleted fs and song_11, unused in code
+-** used const for songs that i presume i dont want to change or later in the code
 -** changed from var to let, to evade the scope monster that var creates!?!
