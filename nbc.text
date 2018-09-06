@@ -17,3 +17,9 @@
     the most straightforward way to loop over Object keys and values
 -** the chord key of the object chordCountsInLabels[song.label] might
     not exist, changed > 0 to !== undefined + indenting
+-** declaration of probabilityOfChordsInLabels not needed
+-** for the function setProbabilityOfChordsInLabels i used the same ES6
+    trick with 'for in' for the loops
+-** we dont need multiplication by 1.0, its literally the same thing
+-** indented code using /= and since i did not declared probabilityOfChordsInLabels,
+    i will just get the songs length from the getNumberOfSongs function
