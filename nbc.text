@@ -13,4 +13,7 @@
 -** declaration of numberOfSongs should be in loops
 -** unnecesary declaration of numberOfSongs in setLabelProbabilities function,
     we can just divide to the length of the list of songs
--** 
+-** in ES6 there is a method for loops, "for 'key' in" that provides us
+    the most straightforward way to loop over Object keys and values
+-** the chord key of the object chordCountsInLabels[song.label] might
+    not exist, changed > 0 to !== undefined + indenting
