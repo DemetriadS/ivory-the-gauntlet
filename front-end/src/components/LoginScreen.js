@@ -31,7 +31,19 @@ class Login extends Component {
             error: ''
           },
           () => {
-            history.push('/home')
+            const userId = firebase.auth().currentUser.uid
+            firebase
+              .database()
+              .ref('users/' + userId)
+              .set({
+                todos: ['eeee macarena']
+              })
+              .then(() => {
+                history.push('/home')
+              })
+              .catch(err => {
+                console.log(err)
+              })
           }
         )
       })
@@ -46,15 +58,15 @@ class Login extends Component {
   render() {
     const { email, password, error } = this.state
     return (
-      <div style = {styles.components}>
-        <form onSubmit={this.handleSubmit} style = {styles.formstyle}>
+      <div style={styles.components}>
+        <form onSubmit={this.handleSubmit} style={styles.formstyle}>
           <input
             type="text"
             name="email"
             placeholder="email"
             value={email}
             onChange={this.handleChange}
-            style = {styles.imputstyle}
+            style={styles.imputstyle}
           />
           <input
             type="password"
@@ -62,12 +74,16 @@ class Login extends Component {
             placeholder="password"
             value={password}
             onChange={this.handleChange}
-            style = {styles.imputstyle}
+            style={styles.imputstyle}
           />
-          <button type="submit" style={styles.buttonstyle}>Log in</button>
+          <button type="submit" style={styles.buttonstyle}>
+            Log in
+          </button>
           <p>{error}</p>
         </form>
-        <NavLink to="/signup" style={styles.navlinkstyle}>Go to Sign up</NavLink>
+        <NavLink to="/signup" style={styles.navlinkstyle}>
+          Go to Sign up
+        </NavLink>
       </div>
     )
   }
@@ -84,23 +100,23 @@ var styles = {
     height: '100'
   },
   formstyle: {
-    display:'flex',
+    display: 'flex',
     flexDirection: 'column',
     alignContent: 'center'
   },
   imputstyle: {
     width: 100,
-    height: 15,
+    height: 15
   },
   buttonstyle: {
     backgroundColor: 'blue',
     color: 'white',
     width: 50,
     height: 20,
-    borderRadius: 5,
+    borderRadius: 5
   },
   navlinkstyle: {
-    textDecoration: 'none',
+    textDecoration: 'none'
   }
 }
 
