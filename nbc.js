@@ -35,7 +35,7 @@ let allChords = []
 let labelCounts = {}
 let labelProbabilities = {}
 let chordCountsInLabels = {}
-let probabilityOfChordsInLabels = {}
+let classified = {}
 
 function train(chords, label) {
   chords.forEach(function(chord) {
@@ -87,6 +87,7 @@ function setProbabilityOfChordsInLabels() {
       chordCountsInLabels[label][chord] /= songs.length
     }
   }
+  return chordCountsInLabels
 }
 
 const difficulties = {
@@ -105,29 +106,26 @@ train(paperBag, difficulties.hard)
 train(toxic, difficulties.hard)
 train(bulletproof, difficulties.hard)
 
-console.log('Number of songs:', getNumberOfSongs())
-console.log('label probabilities set: ' + '\n', setLabelProbabilities())
-console.log('Chrod counts in labels is: ' + '\n',setChordCountsInLabels())
-console.log('Probability of chords in labels is: ' + '\n',setProbabilityOfChordsInLabels())
-
 function classify(chords) {
-  let ttal = labelProbabilities
-  console.log(ttal)
-  let classified = {}
-  Object.keys(ttal).forEach(function(obj) {
+  for (obj in labelProbabilities) {
     let first = labelProbabilities[obj] + 1.01
     chords.forEach(function(chord) {
       let probabilityOfChordInLabel = chordCountsInLabels[obj][chord]
       if (probabilityOfChordInLabel === undefined) {
-        first + 1.01
       } else {
         first = first * (probabilityOfChordInLabel + 1.01)
       }
     })
     classified[obj] = first
-  })
+    console.log(labelProbabilities)
+  }
   console.log(classified)
 }
+console.log('Number of songs:', getNumberOfSongs())
+console.log('label probabilities set: ' + '\n', setLabelProbabilities())
+console.log('Chrod counts in labels is: ' + '\n',setChordCountsInLabels())
+console.log('Probability of chords in labels is: ' + '\n',setProbabilityOfChordsInLabels())
+
 
 classify(['d', 'g', 'e', 'dm'])
 classify(['f#m7', 'a', 'dadd9', 'dmaj7', 'bm', 'bm7', 'd', 'f#m'])
