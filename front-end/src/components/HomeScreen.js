@@ -22,17 +22,28 @@ class Home extends Component {
   }
 
   componentDidMount() {
-    databaseRef.on('value', (data) => {
-      this.setState({
-        todos: data.val()
-      })
+    databaseRef.on('value', data => {
+      if (data.val()) {
+        this.setState({
+          todos: this.mapArrayToObject(data.val())
+        })
+      } else {
+        this.setState({
+          todos: []
+        })
+      }
     })
+  }
 
-    databaseRef.on('child_changed', (data) => {
-      this.setState({
-        todos: data.val()
+  mapArrayToObject = data => {
+    let newData = []
+    for (let key in data) {
+      newData.push({
+        key,
+        text: data[key].text
       })
-    })
+    }
+    return newData
   }
 
   handleChange = e => {
@@ -41,15 +52,34 @@ class Home extends Component {
 
   handleSubmit = e => {
     e.preventDefault()
-    // trimite userInfo la server
-    this.setState({
-      userInput: ''
-    })
+
+    const userId = firebase.auth().currentUser.uid
+    firebase
+      .database()
+      .ref(`users/${userId}`)
+      .child('todos')
+      .push({
+        text: this.state.userInput
+      })
+      .then(() => {
+        this.setState({
+          userInput: ''
+        })
+      })
+  }
+
+  handleDelete = (key) => {
+      var userId = firebase.auth().currentUser.uid
+      firebase.database().ref(`users/${userId}/todos/${key}`).remove() 
   }
 
   renderTodos = () => {
-    // return this.state.todos.map((todo, i) => <p key={i}>{todo}</p>)
-    return <p>{this.state.todos[0]}</p>
+    return this.state.todos.map(todo => (
+      <div key={todo.key}>
+        <p>{todo.text}</p>
+        <button style={{color:'red'}} onClick={this.handleDelete.bind(this,todo.key)}>X</button>
+      </div>
+    ))
   }
 
   render() {
