@@ -46,14 +46,15 @@ class Login extends Component {
   render() {
     const { email, password, error } = this.state
     return (
-      <div>
-        <form onSubmit={this.handleSubmit}>
+      <div style = {styles.components}>
+        <form onSubmit={this.handleSubmit} style = {styles.formstyle}>
           <input
             type="text"
             name="email"
             placeholder="email"
             value={email}
             onChange={this.handleChange}
+            style = {styles.imputstyle}
           />
           <input
             type="password"
@@ -61,13 +62,45 @@ class Login extends Component {
             placeholder="password"
             value={password}
             onChange={this.handleChange}
+            style = {styles.imputstyle}
           />
-          <button type="submit">Log in</button>
+          <button type="submit" style={styles.buttonstyle}>Log in</button>
           <p>{error}</p>
         </form>
-        <NavLink to="/signup">Go to Sign up</NavLink>
+        <NavLink to="/signup" style={styles.navlinkstyle}>Go to Sign up</NavLink>
       </div>
     )
+  }
+}
+
+var styles = {
+  components: {
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'center',
+    alignItems: 'center',
+    textAlign: 'center',
+    width: '100',
+    height: '100'
+  },
+  formstyle: {
+    display:'flex',
+    flexDirection: 'column',
+    alignContent: 'center'
+  },
+  imputstyle: {
+    width: 100,
+    height: 15,
+  },
+  buttonstyle: {
+    backgroundColor: 'blue',
+    color: 'white',
+    width: 50,
+    height: 20,
+    borderRadius: 5,
+  },
+  navlinkstyle: {
+    textDecoration: 'none',
   }
 }
 
